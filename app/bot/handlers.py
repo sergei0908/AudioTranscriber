@@ -1,3 +1,5 @@
+import asyncio
+from app.transcriber import transcribe
 import logging
 import tempfile
 from dataclasses import dataclass
@@ -77,8 +79,11 @@ async def on_media(message: Message, bot: Bot, settings: Settings) -> None:
         with tempfile.TemporaryDirectory(dir=settings.tmp_dir) as workdir:
             src = Path(workdir) / f"input{media.suffix}"
             await bot.download(media.file_id, destination=src)
-            size_kb = src.stat().st_size // 1024
-        await status.edit_text(f"Файл скачан: {size_kb} КБ, формат {media.suffix}")
+
+            await status.edit_text("Расшифровываю…")
+            text = await asyncio.to_thread(transcribe, str(src))
+
+        await status.edit_text(text[:4000] or "Речь в файле не найдена.")
     except TelegramBadRequest as exc:
         log.warning("Telegram отклонил запрос: %s", exc)
         await status.edit_text("Не удалось скачать файл. Возможно, он больше 20 МБ.")

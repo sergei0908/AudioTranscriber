@@ -4,7 +4,10 @@ version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = [
     "aiogram>=3.34.0",
+    "av<19",
     "faster-whisper>=1.2.1",
+    "nvidia-cublas-cu12==12.9.2.10 ; sys_platform == 'win32'",
+    "nvidia-cudnn-cu12==9.28.1.4 ; sys_platform == 'win32'",
     "python-dotenv>=1.2.4",
 ]
 
