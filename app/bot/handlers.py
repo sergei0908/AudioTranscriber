@@ -1,5 +1,4 @@
 import asyncio
-from app.transcriber import transcribe
 import logging
 import tempfile
 from dataclasses import dataclass
@@ -11,6 +10,7 @@ from aiogram.filters import Command
 from aiogram.types import Message
 
 from app.config import Settings
+from app.transcriber import transcribe
 
 log = logging.getLogger(__name__)
 router = Router()

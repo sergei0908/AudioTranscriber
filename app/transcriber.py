@@ -29,6 +29,7 @@ def _get_model():
     _add_cuda_dlls()
     return WhisperModel(MODEL_SIZE, device="cuda", compute_type="float16")
 
+
 def transcribe(file_path: str, language: str | None = None) -> str:
     model = _get_model()
     segments, _info = model.transcribe(file_path, language=language, vad_filter=True)
